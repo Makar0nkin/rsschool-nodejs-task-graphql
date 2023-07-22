@@ -1,16 +1,14 @@
-import { GraphQLList } from "graphql";
+import { GraphQLList, GraphQLString } from "graphql";
 import { memberTypeType } from "../gql_types/memberType.js";
-import { UUIDType } from "../gql_types/uuid.js";
-
 
 export const memberTypeSchemaFields = {
-  post: {
+  memberType: {
     type: memberTypeType,
     args: {
-      id: { type: UUIDType },
+      id: { type: GraphQLString },
     },
   },
-  posts: {
+  memberTypes: {
     type: new GraphQLList(memberTypeType),
   },
 };

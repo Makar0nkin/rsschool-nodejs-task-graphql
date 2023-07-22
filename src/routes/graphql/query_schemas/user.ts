@@ -14,20 +14,3 @@ export const userSchemaFields: SchemaFieldsType = {
     type: new GraphQLList(userType),
   },
 }
-
-// export const userSchema = new GraphQLSchema({
-//   query: new GraphQLObjectType({
-//     name: 'Query',
-//     fields: {
-//       user: {
-//         type: userType,
-//         args: {
-//           id: { type: UUIDType },
-//         },
-//       },
-//       users: {
-//         type: new GraphQLList(userType),
-//       },
-//     },
-//   }),
-// });
