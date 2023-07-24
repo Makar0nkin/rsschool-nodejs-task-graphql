@@ -14,8 +14,8 @@ export const userResolvers = {
   users: async (_: never, { prisma }: iContextLoader): Promise<iUserPrismaResponse[]> => {
     return await prisma.user.findMany({
       include: {
-        posts: true,
-        profile: true,
+        // posts: true,
+        // profile: true,
         subscribedToUser: true, // subscriberId -> user
         userSubscribedTo: true, // authorId -> user
       },

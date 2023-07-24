@@ -9,7 +9,7 @@ export interface iID {
 export interface iUser extends iID {
   name: string
   balance: number
-  posts: iPost[]
+  // posts: iPost[]
   // profile?: iProfile;
   subscribedToUser?: iUser // subscriberId -> user
   userSubscribedTo?: iUser// authorId -> user
@@ -54,6 +54,8 @@ export interface iDataLoaders {
   profileLoader: DataLoader<string, iProfile>;
   postLoader: DataLoader<string, iPost>;
   memberTypeLoader: DataLoader<string, iMemberType>;
+  profileByUserLoader: DataLoader<string, iProfile>
+  postsByAuthorLoader: DataLoader<string, iPost[]>
 }
 
 export interface iContextLoader extends iDataLoaders {

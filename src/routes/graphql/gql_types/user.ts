@@ -8,7 +8,13 @@ import {
 import { UUIDType } from './uuid.js';
 import { postType } from './post.js';
 import { profileType } from './profile.js';
-import { iContextLoader, iID, iSubscriberOnAuthors, iUser, iUserPrismaResponse } from '../utils/interfaces.js';
+import {
+  iContextLoader,
+  iID,
+  iSubscriberOnAuthors,
+  iUser,
+  iUserPrismaResponse,
+} from '../utils/interfaces.js';
 
 export const userType = new GraphQLObjectType({
   name: 'User',
@@ -16,8 +22,19 @@ export const userType = new GraphQLObjectType({
     id: { type: new GraphQLNonNull(UUIDType) },
     name: { type: new GraphQLNonNull(GraphQLString) },
     balance: { type: new GraphQLNonNull(GraphQLFloat) },
-    profile: { type: profileType },
-    posts: { type: new GraphQLList(postType) },
+    profile: {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+      type: profileType,
+      resolve: async ({ id }, args, { profileByUserLoader }: iContextLoader) => {
+        return profileByUserLoader.load(id as string);
+      },
+    },
+    posts: {
+      type: new GraphQLList(postType),
+      resolve: async ({ id }, args, { postsByAuthorLoader }: iContextLoader) => {
+        return postsByAuthorLoader.load(id as string);
+      },
+    },
     userSubscribedTo: {
       type: new GraphQLList(new GraphQLNonNull(userType)),
       resolve: async ({ userSubscribedTo }, args, { userLoader }: iContextLoader) => {
