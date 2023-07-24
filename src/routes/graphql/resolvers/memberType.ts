@@ -9,6 +9,10 @@ export const memberTypeResolvers = {
     return memberTypeLoader.load(id)
   },
   memberTypes: async (_: any, { prisma }: iContextLoader): Promise<iMemberType[]> => {
-    return await prisma.memberType.findMany();
+    return await prisma.memberType.findMany({
+      include: {
+        profiles: true,
+      },
+    });
   },
 };

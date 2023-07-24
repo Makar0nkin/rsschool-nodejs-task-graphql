@@ -32,10 +32,13 @@ export const createDataLoaders = (prisma: PrismaClient): iDataLoaders => {
   };
 
   const batchMemberTypeById = async (ids: readonly string[]): Promise<iMemberType[]> => {
-    const posts = await prisma.memberType.findMany({
+    const memberTypes = await prisma.memberType.findMany({
       where: { id: { in: ids as string[] } },
+      include: {
+        profiles: true,
+      },
     });
-    return orderDataByField(posts, ids as string[], 'id');
+    return orderDataByField(memberTypes, ids as string[], 'id');
   };
 
   return {

@@ -39,13 +39,14 @@ export interface iProfile extends iID {
 }
 
 export interface iMemberType extends iID {
-  discount: number,
-  postsLimitPerMonth: number
+  discount: number;
+  postsLimitPerMonth: number;
+  profiles: iProfile[];
 }
 
 export interface iSchemaField {
-  type: GraphQLType;
-  args?: Record<string, Record<string, GraphQLType>>;
+  type: GraphQLType
+  args?: Record<string, Record<string, GraphQLType>>
 }
 
 export interface iDataLoaders {
