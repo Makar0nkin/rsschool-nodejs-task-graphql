@@ -3,8 +3,8 @@ import { UUIDType } from "./uuid.js";
 
 export const profileType = new GraphQLObjectType({
   name: 'Profile',
-  fields: {
+  fields: () => ({
     subscriberId: { type: new GraphQLNonNull(UUIDType) },
     authorId: { type: new GraphQLNonNull(UUIDType) },
-  },
+  }),
 });

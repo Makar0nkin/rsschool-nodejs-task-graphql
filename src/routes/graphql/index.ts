@@ -15,12 +15,6 @@ const resolvers = {
   ...profileResolvers,
 };
 
-// console.log('QUERY SCHEMA:\t', {
-//       ...userSchemaFields,
-//       ...postSchemaFields,
-//     });
-// console.log('RESOLVERS:\t', resolvers);
-
 const plugin: FastifyPluginAsyncTypebox = async (fastify) => {
   const { prisma } = fastify;
   const dataLoader = createDataLoaders(prisma);

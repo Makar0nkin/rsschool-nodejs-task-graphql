@@ -3,9 +3,9 @@ import { UUIDType } from './uuid.js';
 
 export const memberTypeType = new GraphQLObjectType({
   name: 'memberType',
-  fields: {
+  fields: () => ({
     id: { type: new GraphQLNonNull(GraphQLString) },
     discount: { type: new GraphQLNonNull(GraphQLFloat) },
     postsLimitPerMonth: { type: new GraphQLNonNull(GraphQLInt) },
-  },
+  }),
 });
