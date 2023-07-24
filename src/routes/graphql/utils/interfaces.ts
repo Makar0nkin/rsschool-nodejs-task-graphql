@@ -1,3 +1,5 @@
+import { PrismaClient } from "@prisma/client";
+import DataLoader from "dataloader";
 import { GraphQLType } from "graphql";
 
 export interface iID {
@@ -46,3 +48,13 @@ export interface iSchemaField {
   args?: Record<string, Record<string, GraphQLType>>;
 }
 
+export interface iDataLoaders {
+  userLoader: DataLoader<string, iUserPrismaResponse>;
+  profileLoader: DataLoader<string, iProfile>;
+  postLoader: DataLoader<string, iPost>;
+  memberTypeLoader: DataLoader<string, iMemberType>;
+}
+
+export interface iContextLoader extends iDataLoaders {
+  prisma: PrismaClient
+} 

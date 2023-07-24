@@ -1,17 +1,14 @@
 import { PrismaClient } from '@prisma/client';
-import { iID, iMemberType, iPost } from '../utils/interfaces.js';
+import { iContextLoader, iID, iMemberType, iPost } from '../utils/interfaces.js';
 
 export const memberTypeResolvers = {
-  memberType: async ({ id }: iID, prisma: PrismaClient): Promise<iMemberType | null> => {
+  memberType: async ({ id }: iID, { memberTypeLoader }: iContextLoader): Promise<iMemberType | null> => {
     if (!id) {
       throw new Error('id is required');
     }
-    const memberType = await prisma.memberType.findUnique({
-      where: { id },
-    });
-    return memberType;
+    return memberTypeLoader.load(id)
   },
-  memberTypes: async (_: any, prisma: PrismaClient): Promise<iMemberType[]> => {
+  memberTypes: async (_: any, { prisma }: iContextLoader): Promise<iMemberType[]> => {
     return await prisma.memberType.findMany();
   },
 };

@@ -1,4 +1,4 @@
-import { GraphQLList, GraphQLObjectType, GraphQLSchema, GraphQLString, GraphQLFloat } from 'graphql';
+import { GraphQLList } from 'graphql';
 import { userType } from '../gql_types/user.js';
 import { UUIDType } from '../gql_types/uuid.js';
 import { SchemaFieldsType } from '../utils/types.js';

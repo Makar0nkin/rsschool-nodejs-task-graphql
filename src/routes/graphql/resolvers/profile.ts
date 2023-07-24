@@ -1,17 +1,17 @@
 import { PrismaClient } from '@prisma/client';
-import { iID, iProfile } from '../utils/interfaces.js';
+import { iContextLoader, iID, iProfile } from '../utils/interfaces.js';
 
 export const profileResolvers = {
-  profile: async ({ id }: iID, prisma: PrismaClient): Promise<iProfile | null> => {
+  profile: async (
+    { id }: iID,
+    { profileLoader }: iContextLoader,
+  ): Promise<iProfile | null> => {
     if (!id) {
       throw new Error('id is required');
     }
-    const profile = await prisma.profile.findUnique({
-      where: { id },
-    });
-    return profile;
+    return profileLoader.load(id);
   },
-  profiles: async (_: any, prisma: PrismaClient): Promise<iProfile[]> => {
+  profiles: async (_: never, { prisma }: iContextLoader): Promise<iProfile[]> => {
     return await prisma.profile.findMany();
   },
 };

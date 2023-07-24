@@ -3,16 +3,17 @@ import { createGqlResponseSchema, gqlResponseSchema, querySchema } from './schem
 import { graphql, validate, parse } from 'graphql';
 import { userResolvers } from './resolvers/user.js';
 import { postResolvers } from './resolvers/post.js';
-import depthLimit from 'graphql-depth-limit'
+import depthLimit from 'graphql-depth-limit';
 import { memberTypeResolvers } from './resolvers/memberType.js';
 import { profileResolvers } from './resolvers/profile.js';
+import { createDataLoaders } from './utils/dataLoader.js';
 
 const resolvers = {
   ...userResolvers,
   ...postResolvers,
   ...memberTypeResolvers,
   ...profileResolvers,
-}
+};
 
 // console.log('QUERY SCHEMA:\t', {
 //       ...userSchemaFields,
@@ -21,6 +22,9 @@ const resolvers = {
 // console.log('RESOLVERS:\t', resolvers);
 
 const plugin: FastifyPluginAsyncTypebox = async (fastify) => {
+  const { prisma } = fastify;
+  const dataLoader = createDataLoaders(prisma);
+
   fastify.route({
     url: '/',
     method: 'POST',
@@ -42,7 +46,7 @@ const plugin: FastifyPluginAsyncTypebox = async (fastify) => {
         source: req.body.query,
         rootValue: resolvers,
         variableValues: req.body.variables,
-        contextValue: fastify.prisma,
+        contextValue: { prisma, ...dataLoader },
       });
     },
   });
